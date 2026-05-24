@@ -84,6 +84,14 @@ canvas {
     @apply absolute bottom-4 left-4 right-4 rounded-2xl border border-white/70 bg-chalk/85 p-4 shadow-soft backdrop-blur md:left-auto md:max-w-xs;
   }
 
+  .scene-chip {
+    @apply rounded-full border border-charcoal/10 bg-ivory px-3 py-2 text-xs font-semibold text-charcoal transition hover:bg-stone/40 focus:outline-none focus:ring-4 focus:ring-charcoal/10;
+  }
+
+  .scene-swatch {
+    @apply h-8 flex-1 rounded-full border-2 border-white shadow-sm transition hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-charcoal/10;
+  }
+
   .object-tooltip {
     @apply pointer-events-none whitespace-nowrap rounded-full bg-charcoal px-3 py-2 text-xs font-semibold text-chalk shadow-soft;
   }
@@ -93,12 +101,164 @@ canvas {
     @apply overflow-hidden rounded-2xl border border-charcoal/10 bg-chalk shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-soft;
   }
 
+  .category-card button[aria-pressed='true'] {
+    @apply text-wood;
+  }
+
+  .category-live-panel {
+    @apply mt-8 grid overflow-hidden rounded-[2rem] border border-charcoal/10 bg-chalk shadow-soft md:grid-cols-[0.9fr_1.1fr];
+  }
+
+  .category-live-image {
+    @apply relative min-h-72 overflow-hidden bg-charcoal md:min-h-96;
+  }
+
+  .category-live-image img {
+    @apply h-full w-full object-cover;
+  }
+
+  .category-live-image::after {
+    @apply absolute inset-0 content-[''];
+    background: linear-gradient(135deg, rgba(38, 36, 32, 0.12), rgba(182, 143, 113, 0.2));
+  }
+
   .visual-panel {
     @apply relative h-44 overflow-hidden;
   }
 
   .interactive-studio {
     @apply grid overflow-hidden rounded-[2rem] border border-charcoal/10 bg-chalk shadow-soft lg:grid-cols-[1.25fr_0.75fr];
+  }
+
+  .hyper-studio {
+    @apply grid overflow-hidden rounded-[2rem] border border-charcoal/10 bg-chalk shadow-soft lg:grid-cols-[1.35fr_0.65fr];
+  }
+
+  .hyper-stage {
+    @apply relative min-h-[520px] overflow-hidden bg-charcoal md:min-h-[680px];
+    perspective: 1200px;
+  }
+
+  .hyper-stage-image {
+    @apply absolute inset-0 h-full w-full object-cover;
+  }
+
+  .hyper-stage-image-detail {
+    object-position: 62% 50%;
+    filter: contrast(1.03) saturate(1.08);
+  }
+
+  .hyper-temperature,
+  .hyper-cool,
+  .hyper-accent-wash {
+    @apply pointer-events-none absolute inset-0 transition-opacity duration-500;
+  }
+
+  .hyper-temperature {
+    background: radial-gradient(circle at 45% 38%, rgba(255, 197, 122, 0.95), transparent 48%),
+      linear-gradient(135deg, rgba(194, 126, 78, 0.52), transparent 62%);
+  }
+
+  .hyper-cool {
+    background: linear-gradient(135deg, rgba(88, 153, 196, 0.72), transparent 58%);
+    mix-blend-mode: screen;
+  }
+
+  .hyper-accent-wash {
+    background: radial-gradient(circle at 78% 28%, var(--accent-glow), transparent 34%),
+      radial-gradient(circle at 24% 74%, var(--accent-glow), transparent 30%);
+    mix-blend-mode: multiply;
+    opacity: 0.7;
+  }
+
+  .hyper-caption {
+    @apply absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/90 via-charcoal/50 to-transparent p-6 pt-36 md:p-10 md:pt-52;
+  }
+
+  .hyper-console {
+    @apply bg-chalk p-6 md:p-8 lg:p-10;
+  }
+
+  .control-block {
+    @apply mt-7 rounded-2xl border border-charcoal/10 bg-ivory p-5;
+  }
+
+  .control-label {
+    @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-wood;
+  }
+
+  .palette-button {
+    @apply h-12 rounded-full border-2 border-white shadow-sm transition hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-4 focus:ring-charcoal/10;
+  }
+
+  .palette-button-active {
+    @apply ring-4 ring-charcoal/20;
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  .temperature-slider {
+    @apply mt-5 w-full;
+    accent-color: var(--accent-color);
+  }
+
+  .feature-toggle {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-charcoal/10 bg-ivory px-4 text-sm font-semibold text-charcoal transition hover:border-charcoal/30 hover:bg-stone/30 disabled:cursor-not-allowed disabled:opacity-45 focus:outline-none focus:ring-4 focus:ring-charcoal/10;
+  }
+
+  .feature-toggle[aria-pressed='true'] {
+    @apply bg-charcoal text-chalk;
+  }
+
+  .feature-list {
+    @apply mt-6 flex flex-wrap gap-2;
+  }
+
+  .feature-list span {
+    @apply inline-flex items-center gap-2 rounded-full bg-stone/35 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-graphite;
+  }
+
+  .principle-mood-band {
+    @apply relative mb-8 grid min-h-80 overflow-hidden rounded-[2rem] bg-charcoal p-6 shadow-soft md:min-h-96 md:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end;
+  }
+
+  .principle-mood-band img {
+    @apply absolute inset-0 h-full w-full object-cover opacity-70;
+  }
+
+  .principle-mood-band::after {
+    @apply absolute inset-0 content-[''];
+    background: linear-gradient(90deg, rgba(38, 36, 32, 0.86), rgba(38, 36, 32, 0.32), rgba(47, 111, 159, 0.25));
+  }
+
+  .principle-mood-band > div {
+    @apply relative z-10;
+  }
+
+  .floating-layer {
+    @apply pointer-events-none absolute inset-0;
+    transform-style: preserve-3d;
+  }
+
+  .floating-piece {
+    @apply absolute block border border-white/50 shadow-soft backdrop-blur-md;
+    background: color-mix(in srgb, var(--accent-color) 58%, rgba(255, 253, 248, 0.78));
+    transform: translateZ(80px);
+  }
+
+  .floating-piece-1 {
+    @apply left-[13%] top-[18%] h-24 w-20 rounded-[1.3rem];
+  }
+
+  .floating-piece-2 {
+    @apply right-[14%] top-[30%] h-16 w-32 rounded-full;
+  }
+
+  .floating-piece-3 {
+    @apply bottom-[26%] left-[38%] h-20 w-20 rounded-full;
+  }
+
+  .floating-layer-active .floating-piece {
+    box-shadow: 0 26px 90px var(--accent-glow);
   }
 
   .studio-image-wrap {

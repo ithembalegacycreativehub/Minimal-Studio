@@ -1,5 +1,6 @@
 import { Boxes, Gem, LampDesk, Leaf, Palette, Sofa, Sparkles, SunMedium } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import { showroomImages } from '../data/showroomImages';
 
 const principles = [
   ['Less but better', 'Edit until each piece has purpose, scale, and emotional weight.', Gem],
@@ -20,6 +21,16 @@ export default function Principles() {
         title="A home that lowers the volume."
         copy="Minimalism is a practice of clarity. The best rooms feel generous, useful, personal, and easy to live inside."
       />
+      <div className="principle-mood-band">
+        <img src={showroomImages.modernColor} alt="Modern minimalist room with richer colour accents" loading="lazy" />
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-clay">Modern minimal does not mean colourless</p>
+          <h3 className="mt-3 font-display text-4xl font-semibold text-chalk md:text-5xl">Use colour like architecture.</h3>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-stone">
+            Add sage, cobalt, clay, or ink as precise moments: a chair, artwork, lamp, or cabinet face. The room stays calm, but it gains presence.
+          </p>
+        </div>
+      </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {principles.map(([title, copy, Icon]) => (
           <article key={title} className="rounded-2xl border border-charcoal/10 bg-chalk p-6 shadow-sm">

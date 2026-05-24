@@ -1,5 +1,5 @@
 import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
-import { ContactShadows, Html, OrbitControls, RoundedBox, useProgress } from '@react-three/drei';
+import { ContactShadows, Float, Html, OrbitControls, RoundedBox, useProgress } from '@react-three/drei';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import * as THREE from 'three';
 
@@ -108,11 +108,17 @@ function MinimalRoom({
   hovered,
   setHovered,
   setSelected,
+  accent,
+  antiGravity,
+  lightMode,
 }: {
   selected: string;
   hovered: string | null;
   setHovered: (value: string | null) => void;
   setSelected: (value: string) => void;
+  accent: string;
+  antiGravity: boolean;
+  lightMode: 'warm' | 'cool';
 }) {
   const materials = useMemo(
     () => ({
@@ -124,8 +130,9 @@ function MinimalRoom({
       paper: new THREE.MeshStandardMaterial({ color: '#fffdf8', roughness: 0.8 }),
       clay: new THREE.MeshStandardMaterial({ color: '#b68f71', roughness: 0.74 }),
       linen: new THREE.MeshStandardMaterial({ color: '#e9dfd2', roughness: 0.98 }),
+      accent: new THREE.MeshStandardMaterial({ color: accent, roughness: 0.52, metalness: 0.04 }),
     }),
-    [],
+    [accent],
   );
 
   return (
@@ -138,6 +145,10 @@ function MinimalRoom({
       </mesh>
       <mesh position={[-3.95, 1.75, 0]} rotation={[0, Math.PI / 2, 0]} receiveShadow material={materials.wall}>
         <boxGeometry args={[5.8, 3.6, 0.12]} />
+      </mesh>
+      <mesh position={[3.94, 1.75, 0.2]} rotation={[0, Math.PI / 2, 0]} receiveShadow>
+        <boxGeometry args={[4.5, 3.6, 0.08]} />
+        <meshStandardMaterial color={lightMode === 'warm' ? '#f2dcc4' : '#dce7ee'} roughness={0.9} />
       </mesh>
 
       <mesh position={[-0.9, 0.02, 0.25]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow material={materials.paper}>
@@ -168,7 +179,7 @@ function MinimalRoom({
       <RoomObject objectId="art" selected={selected} hovered={hovered} setHovered={setHovered} setSelected={setSelected} labelPosition={[-1.05, 2.55, -2.74]}>
         <group position={[-1.05, 1.95, -2.78]}>
           <RoundedBox args={[1.45, 1.1, 0.06]} radius={0.025} smoothness={4} castShadow material={materials.paper} />
-          <mesh position={[-0.22, 0.06, 0.04]} material={materials.clay}>
+          <mesh position={[-0.22, 0.06, 0.04]} material={materials.accent}>
             <circleGeometry args={[0.28, 32]} />
           </mesh>
           <mesh position={[0.25, -0.18, 0.05]} material={materials.charcoal}>
@@ -185,7 +196,7 @@ function MinimalRoom({
           <mesh position={[0, 1.58, 0]} castShadow material={materials.paper}>
             <coneGeometry args={[0.36, 0.5, 28]} />
           </mesh>
-          <pointLight position={[0, 1.45, 0]} intensity={1.2} distance={3} color="#f6d9ac" />
+          <pointLight position={[0, 1.45, 0]} intensity={lightMode === 'warm' ? 1.7 : 0.95} distance={3.4} color={lightMode === 'warm' ? '#f6d9ac' : '#c8e8ff'} />
         </group>
       </RoomObject>
 
@@ -201,11 +212,47 @@ function MinimalRoom({
         <group position={[2.35, 0.48, -2.18]}>
           <RoundedBox args={[1.1, 0.88, 0.55]} radius={0.08} smoothness={8} castShadow material={materials.paper} />
           <RoundedBox args={[0.52, 0.34, 0.42]} radius={0.08} smoothness={8} position={[0.06, 0.55, 0]} castShadow material={materials.charcoal} />
-          <mesh position={[-0.24, 0.55, 0.24]} material={materials.clay}>
+          <mesh position={[-0.24, 0.55, 0.24]} material={materials.accent}>
             <torusGeometry args={[0.18, 0.025, 8, 24, Math.PI]} />
           </mesh>
         </group>
       </RoomObject>
+
+      <FloatingDecor materials={materials} antiGravity={antiGravity} />
+    </group>
+  );
+}
+
+function FloatingDecor({ materials, antiGravity }: { materials: Record<string, THREE.MeshStandardMaterial>; antiGravity: boolean }) {
+  const floatIntensity = antiGravity ? 0.65 : 0.05;
+  const speed = antiGravity ? 1.1 : 0.15;
+
+  return (
+    <group>
+      <Float speed={speed} floatIntensity={floatIntensity} rotationIntensity={antiGravity ? 0.35 : 0.02}>
+        <group position={[0.95, 1.35, 0.2]}>
+          <RoundedBox args={[0.42, 0.55, 0.08]} radius={0.03} smoothness={5} material={materials.accent} castShadow />
+          <RoundedBox args={[0.34, 0.08, 0.34]} radius={0.04} smoothness={5} position={[0.58, -0.26, 0.05]} material={materials.wood} castShadow />
+        </group>
+      </Float>
+      <Float speed={speed * 0.9} floatIntensity={floatIntensity * 0.8} rotationIntensity={antiGravity ? 0.28 : 0.02}>
+        <group position={[-2.35, 1.2, 0.8]}>
+          <mesh material={materials.paper} castShadow>
+            <sphereGeometry args={[0.22, 24, 18]} />
+          </mesh>
+          <mesh position={[0.16, 0.12, 0]} material={materials.accent} castShadow>
+            <sphereGeometry args={[0.08, 18, 12]} />
+          </mesh>
+        </group>
+      </Float>
+      <Float speed={speed * 1.25} floatIntensity={floatIntensity} rotationIntensity={antiGravity ? 0.5 : 0.02}>
+        <group position={[2.9, 1.65, 0.7]}>
+          <mesh material={materials.charcoal} castShadow rotation={[Math.PI / 2, 0, 0]}>
+            <torusGeometry args={[0.2, 0.025, 8, 28]} />
+          </mesh>
+          <RoundedBox args={[0.16, 0.32, 0.16]} radius={0.04} smoothness={5} position={[0.28, -0.12, 0]} material={materials.accent} castShadow />
+        </group>
+      </Float>
     </group>
   );
 }
@@ -213,6 +260,9 @@ function MinimalRoom({
 export default function ThreeRoomScene() {
   const [selected, setSelected] = useState(sceneObjects[0].id);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [antiGravity, setAntiGravity] = useState(true);
+  const [lightMode, setLightMode] = useState<'warm' | 'cool'>('warm');
+  const [accent, setAccent] = useState('#b68f71');
   const activeObject = sceneObjects.find((object) => object.id === selected) ?? sceneObjects[0];
 
   useEffect(() => {
@@ -232,11 +282,19 @@ export default function ThreeRoomScene() {
           aria-label="Interactive 3D minimalist room showroom"
         >
           <color attach="background" args={['#f8f4ed']} />
-          <ambientLight intensity={1.2} />
-          <directionalLight position={[4, 6, 5]} intensity={1.8} castShadow shadow-mapSize={[1024, 1024]} />
+          <ambientLight intensity={lightMode === 'warm' ? 1.18 : 1.35} />
+          <directionalLight position={[4, 6, 5]} intensity={lightMode === 'warm' ? 1.9 : 1.45} castShadow shadow-mapSize={[1024, 1024]} color={lightMode === 'warm' ? '#fff1dc' : '#d9efff'} />
           <Suspense fallback={<LoadingState />}>
             <CameraRig />
-            <MinimalRoom selected={selected} hovered={hovered} setHovered={setHovered} setSelected={setSelected} />
+            <MinimalRoom
+              selected={selected}
+              hovered={hovered}
+              setHovered={setHovered}
+              setSelected={setSelected}
+              accent={accent}
+              antiGravity={antiGravity}
+              lightMode={lightMode}
+            />
             <ContactShadows position={[0, -0.03, 0]} opacity={0.28} scale={8} blur={2.4} far={2.8} />
           </Suspense>
           <OrbitControls
@@ -253,6 +311,26 @@ export default function ThreeRoomScene() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-wood">Selected detail</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-charcoal">{activeObject.label}</h2>
           <p className="mt-2 text-sm leading-6 text-graphite">{activeObject.note}</p>
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            <button className="scene-chip" type="button" onClick={() => setAntiGravity((value) => !value)}>
+              {antiGravity ? 'Gravity off' : 'Gravity on'}
+            </button>
+            <button className="scene-chip" type="button" onClick={() => setLightMode((value) => (value === 'warm' ? 'cool' : 'warm'))}>
+              {lightMode === 'warm' ? 'Warm light' : 'Cool light'}
+            </button>
+          </div>
+          <div className="mt-3 flex gap-2" aria-label="3D scene accent colour">
+            {['#b68f71', '#8fa18b', '#2f6f9f', '#202938'].map((color) => (
+              <button
+                key={color}
+                className="scene-swatch"
+                type="button"
+                style={{ backgroundColor: color }}
+                aria-label={`Set accent colour ${color}`}
+                onClick={() => setAccent(color)}
+              />
+            ))}
+          </div>
         </aside>
       </div>
     </WebGLSupportGuard>
