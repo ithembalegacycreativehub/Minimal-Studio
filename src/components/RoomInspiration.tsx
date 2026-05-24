@@ -1,9 +1,11 @@
 import SectionHeading from './SectionHeading';
+import { showroomImages } from '../data/showroomImages';
 
 const rooms = [
   {
     title: 'Calm Living Room',
     mood: 'Quiet social, tactile, grounded',
+    image: showroomImages.livingRoom,
     textures: 'Boucle, oak, wool, honed stone',
     palette: ['#fffdf8', '#d8d1c7', '#9d8f82', '#262420'],
     notes: 'Anchor the room with a low couch, one sculptural table, soft lighting, and a single oversized artwork.',
@@ -11,6 +13,7 @@ const rooms = [
   {
     title: 'Restful Bedroom',
     mood: 'Layered, softened, private',
+    image: showroomImages.bedroom,
     textures: 'Washed linen, ceramic, ash wood',
     palette: ['#f8f4ed', '#e7ded2', '#b68f71', '#4b4944'],
     notes: 'Use a quiet bed wall, breathable textiles, and hidden bedside storage to make rest feel designed.',
@@ -18,6 +21,7 @@ const rooms = [
   {
     title: 'Functional Kitchen',
     mood: 'Precise, warm, uncluttered',
+    image: showroomImages.kitchen,
     textures: 'Matte fronts, brushed metal, pale timber',
     palette: ['#fffdf8', '#c8bfb4', '#8d6e57', '#262420'],
     notes: 'Keep counters open by integrating appliances and dedicating one visible shelf to daily rituals.',
@@ -25,6 +29,7 @@ const rooms = [
   {
     title: 'Art-Focused Studio Wall',
     mood: 'Composed, personal, gallery-like',
+    image: showroomImages.artWall,
     textures: 'Limewash, canvas, blackened metal',
     palette: ['#f8f4ed', '#d8d1c7', '#b68f71', '#262420'],
     notes: 'Let negative space frame the work. One strong piece can create more presence than a crowded wall.',
@@ -42,13 +47,9 @@ export default function RoomInspiration() {
       <div className="grid gap-6 lg:grid-cols-2">
         {rooms.map((room, index) => (
           <article key={room.title} className="inspiration-panel">
-            <div className="room-mockup" aria-hidden="true">
-              <span className={`mock-wall mock-wall-${index + 1}`} />
-              <span className="mock-floor" />
-              <span className="mock-frame" />
-              <span className="mock-sofa" />
-              <span className="mock-table" />
-              <span className="mock-lamp" />
+            <div className="room-mockup">
+              <img src={room.image} alt={`${room.title} minimalist interior styling`} loading="lazy" />
+              <div className={`room-image-wash room-image-wash-${index + 1}`} />
             </div>
             <div>
               <h3 className="font-display text-3xl font-semibold text-charcoal">{room.title}</h3>

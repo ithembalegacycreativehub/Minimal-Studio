@@ -97,6 +97,38 @@ canvas {
     @apply relative h-44 overflow-hidden;
   }
 
+  .interactive-studio {
+    @apply grid overflow-hidden rounded-[2rem] border border-charcoal/10 bg-chalk shadow-soft lg:grid-cols-[1.25fr_0.75fr];
+  }
+
+  .studio-image-wrap {
+    @apply relative min-h-[420px] overflow-hidden bg-charcoal md:min-h-[560px];
+  }
+
+  .studio-image {
+    @apply h-full w-full object-cover transition duration-700;
+  }
+
+  .studio-warmth {
+    @apply pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_45%_40%,rgba(246,217,172,0.9),transparent_54%),linear-gradient(135deg,rgba(182,143,113,0.55),transparent_58%)];
+  }
+
+  .studio-caption {
+    @apply absolute bottom-0 left-0 right-0 bg-gradient-to-t from-charcoal/85 to-transparent p-6 pt-28 md:p-10 md:pt-36;
+  }
+
+  .studio-controls {
+    @apply p-6 md:p-8 lg:p-10;
+  }
+
+  .studio-mode {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-charcoal/10 bg-ivory px-4 text-sm font-semibold text-graphite transition hover:border-charcoal/25 hover:text-charcoal focus:outline-none focus:ring-4 focus:ring-charcoal/10;
+  }
+
+  .studio-mode-active {
+    @apply border-charcoal bg-charcoal text-chalk hover:text-chalk;
+  }
+
   .visual-line {
     @apply absolute rounded-full bg-chalk/85;
   }
@@ -119,6 +151,30 @@ canvas {
 
   .room-mockup {
     @apply relative min-h-80 overflow-hidden rounded-2xl bg-ivory;
+  }
+
+  .room-mockup img {
+    @apply h-full min-h-80 w-full object-cover transition duration-500;
+  }
+
+  .inspiration-panel:hover .room-mockup img {
+    @apply scale-105;
+  }
+
+  .room-image-wash {
+    @apply absolute inset-0 bg-gradient-to-t from-charcoal/35 via-transparent to-chalk/5;
+  }
+
+  .room-image-wash-2 {
+    @apply from-clay/35;
+  }
+
+  .room-image-wash-3 {
+    @apply from-graphite/45;
+  }
+
+  .room-image-wash-4 {
+    @apply from-charcoal/55;
   }
 
   .mock-wall {

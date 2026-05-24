@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
+import InteractiveStudio from './components/InteractiveStudio';
 import Principles from './components/Principles';
 import RoomInspiration from './components/RoomInspiration';
 import ProductInspiration from './components/ProductInspiration';
@@ -24,6 +25,7 @@ export default function App() {
             </Suspense>
           }
         />
+        <InteractiveStudio />
         <CategoryGrid />
         <Principles />
         <RoomInspiration />

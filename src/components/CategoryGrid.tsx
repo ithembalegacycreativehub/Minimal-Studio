@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import SectionHeading from './SectionHeading';
 import { categories } from '../data/categories';
+import { showroomImages } from '../data/showroomImages';
 
 export default function CategoryGrid() {
   return (
@@ -14,9 +15,13 @@ export default function CategoryGrid() {
         {categories.map((category) => (
           <article key={category.title} className="group category-card">
             <div className={`visual-panel bg-gradient-to-br ${category.accent}`}>
-              <span className="visual-line visual-line-one" />
-              <span className="visual-line visual-line-two" />
-              <span className="visual-block" />
+              <img
+                className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-105"
+                src={showroomImages[category.imageKey]}
+                alt={`${category.title} minimalist interior inspiration`}
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/35 via-transparent to-chalk/10" />
             </div>
             <div className="p-6">
               <h3 className="font-display text-3xl font-semibold text-charcoal">{category.title}</h3>

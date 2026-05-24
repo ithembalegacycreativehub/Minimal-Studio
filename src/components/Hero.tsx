@@ -1,5 +1,6 @@
 import { ArrowDown, Compass } from 'lucide-react';
 import { ReactNode } from 'react';
+import { showroomImages } from '../data/showroomImages';
 
 type HeroProps = {
   scene: ReactNode;
@@ -9,6 +10,12 @@ export default function Hero({ scene }: HeroProps) {
   return (
     <section id="home" className="relative flex min-h-screen items-center overflow-hidden pt-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(182,143,113,0.18),transparent_34%),linear-gradient(135deg,#fffdf8_0%,#f8f4ed_55%,#d8d1c7_100%)]" />
+      <img
+        className="absolute inset-0 h-full w-full object-cover opacity-[0.08] mix-blend-multiply"
+        src={showroomImages.heroLiving}
+        alt=""
+        aria-hidden="true"
+      />
       <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 px-5 pb-14 md:px-8 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="relative z-10 max-w-2xl">
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.32em] text-wood">Minimal Living Studio</p>
