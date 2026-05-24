@@ -6,7 +6,7 @@ export default defineConfig({
   // GitHub Pages note:
   // Use '/' for a user/organization site, or '/repository-name/' for a project site.
   // Example: base: '/minimal-living-studio/'
-  base: '/',
+  base: '/Minimal-Studio/',
   build: {
     sourcemap: true,
   },
