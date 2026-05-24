@@ -3,7 +3,9 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
 import InteractiveStudio from './components/InteractiveStudio';
+import JapandiLiving from './components/JapandiLiving';
 import Principles from './components/Principles';
+import SpaceJourney from './components/SpaceJourney';
 import RoomInspiration from './components/RoomInspiration';
 import ProductInspiration from './components/ProductInspiration';
 import MotionStory from './components/MotionStory';
@@ -26,6 +28,8 @@ export default function App() {
           }
         />
         <InteractiveStudio />
+        <JapandiLiving />
+        <SpaceJourney />
         <CategoryGrid />
         <Principles />
         <RoomInspiration />

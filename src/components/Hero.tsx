@@ -27,9 +27,9 @@ export default function Hero({ scene }: HeroProps) {
             organisation, and modern home rituals.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a className="btn-primary" href="#studio">
+            <a className="btn-primary journey-cta" href="#play">
               <Compass size={18} aria-hidden="true" />
-              Explore the Studio
+              Begin the Journey
             </a>
             <a className="btn-secondary" href="#categories">
               View Design Categories

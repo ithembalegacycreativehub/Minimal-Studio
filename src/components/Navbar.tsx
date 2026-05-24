@@ -2,16 +2,19 @@ import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const links = [
-  { label: 'Home', href: '#home' },
-  { label: 'Studio', href: '#studio' },
-  { label: 'Categories', href: '#categories' },
-  { label: 'Principles', href: '#principles' },
-  { label: 'Journal', href: '#journal' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Start', href: '#home' },
+  { label: 'Studio', href: '#play' },
+  { label: 'Japandi', href: '#japandi' },
+  { label: 'Spaces', href: '#spaces' },
+  { label: 'Collection', href: '#categories' },
+  { label: 'Inspiration', href: '#journal' },
+  { label: 'Connect', href: '#contact' },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('#home');
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -20,17 +23,44 @@ export default function Navbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(maxScroll > 0 ? window.scrollY / maxScroll : 0);
+      const visibleLinks = links
+        .map((link) => ({ href: link.href, element: document.querySelector(link.href) }))
+        .filter((item): item is { href: string; element: Element } => Boolean(item.element));
+      const current = [...visibleLinks].reverse().find((item) => item.element.getBoundingClientRect().top <= 120);
+      if (current) setActive(current.href);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const journeyTo = (href: string) => {
+    setOpen(false);
+    setActive(href);
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-charcoal/10 bg-chalk/80 backdrop-blur-xl">
+      <span className="nav-progress" style={{ transform: `scaleX(${progress})` }} />
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8" aria-label="Primary navigation">
-        <a href="#home" className="font-display text-2xl font-semibold tracking-wide text-charcoal">
+        <button type="button" onClick={() => journeyTo('#home')} className="border-0 bg-transparent p-0 font-display text-2xl font-semibold tracking-wide text-charcoal">
           Minimal Living Studio
-        </a>
+        </button>
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
-            <a key={link.href} href={link.href} className="text-sm font-medium text-graphite transition hover:text-charcoal">
+            <button
+              key={link.href}
+              type="button"
+              onClick={() => journeyTo(link.href)}
+              className={`journey-link ${active === link.href ? 'journey-link-active' : ''}`}
+            >
               {link.label}
-            </a>
+            </button>
           ))}
         </div>
         <button
@@ -47,14 +77,14 @@ export default function Navbar() {
         <div className="border-t border-charcoal/10 bg-chalk px-5 py-6 shadow-soft">
           <div className="flex flex-col gap-4">
             {links.map((link) => (
-              <a
+              <button
                 key={link.href}
-                href={link.href}
+                type="button"
                 className="py-2 text-lg font-medium text-charcoal"
-                onClick={() => setOpen(false)}
+                onClick={() => journeyTo(link.href)}
               >
                 {link.label}
-              </a>
+              </button>
             ))}
           </div>
         </div>

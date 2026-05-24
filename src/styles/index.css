@@ -49,8 +49,37 @@ canvas {
 }
 
 @layer components {
+  .nav-progress {
+    @apply absolute bottom-0 left-0 h-[2px] w-full origin-left bg-clay transition-transform duration-200;
+  }
+
+  .journey-link {
+    @apply relative text-sm font-medium text-graphite transition hover:text-charcoal focus:outline-none focus-visible:ring-4 focus-visible:ring-charcoal/10;
+  }
+
+  .journey-link::after {
+    @apply absolute -bottom-2 left-0 h-px w-full origin-left scale-x-0 bg-clay content-[''] transition-transform duration-300;
+  }
+
+  .journey-link-active {
+    @apply text-charcoal;
+  }
+
+  .journey-link-active::after,
+  .journey-link:hover::after {
+    @apply scale-x-100;
+  }
+
   .section-shell {
     @apply mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28;
+  }
+
+  .cinematic-scene {
+    @apply relative;
+  }
+
+  .cinematic-scene::before {
+    @apply pointer-events-none absolute left-1/2 top-0 h-40 w-px -translate-x-1/2 bg-gradient-to-b from-charcoal/10 to-transparent content-[''];
   }
 
   .btn-primary,
@@ -61,6 +90,15 @@ canvas {
 
   .btn-primary {
     @apply bg-charcoal text-chalk shadow-soft hover:bg-graphite focus:ring-charcoal/20;
+  }
+
+  .journey-cta {
+    @apply relative overflow-hidden;
+  }
+
+  .journey-cta::after {
+    @apply absolute inset-y-0 -left-20 w-16 rotate-12 bg-white/25 content-[''];
+    animation: cta-sheen 4.8s ease-in-out infinite;
   }
 
   .btn-secondary {
@@ -261,6 +299,147 @@ canvas {
     box-shadow: 0 26px 90px var(--accent-glow);
   }
 
+  .japandi-stage {
+    @apply grid overflow-hidden rounded-[2rem] border border-charcoal/10 bg-chalk shadow-soft lg:grid-cols-[1.1fr_0.9fr];
+  }
+
+  .japandi-image {
+    @apply relative min-h-[440px] overflow-hidden bg-charcoal;
+  }
+
+  .japandi-image img {
+    @apply h-full w-full object-cover;
+  }
+
+  .japandi-light {
+    @apply absolute inset-0;
+    background: radial-gradient(circle at 32% 32%, rgba(255, 236, 205, 0.5), transparent 42%),
+      linear-gradient(135deg, rgba(141, 110, 87, 0.45), rgba(38, 36, 32, 0.12));
+  }
+
+  .japandi-panel {
+    @apply flex flex-col justify-center p-6 md:p-10;
+  }
+
+  .japandi-card {
+    @apply flex min-h-56 flex-col items-start gap-4 rounded-2xl border border-charcoal/10 bg-chalk p-6 text-left shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-soft focus:outline-none focus:ring-4 focus:ring-clay/20;
+  }
+
+  .japandi-card svg {
+    @apply rounded-full bg-stone/45 p-3 text-charcoal;
+    box-sizing: content-box;
+  }
+
+  .japandi-card span {
+    @apply text-lg font-semibold text-charcoal;
+  }
+
+  .japandi-card small {
+    @apply text-sm leading-7 text-graphite;
+  }
+
+  .japandi-card-active {
+    @apply border-clay bg-[linear-gradient(135deg,#fffdf8,#f0e4d6)] shadow-soft;
+  }
+
+  .space-journey {
+    @apply grid gap-6 lg:grid-cols-[0.42fr_1fr];
+  }
+
+  .space-map {
+    @apply grid gap-3 rounded-[2rem] border border-charcoal/10 bg-chalk p-4 shadow-sm;
+  }
+
+  .space-node {
+    @apply rounded-2xl border border-charcoal/10 bg-ivory p-4 text-left transition duration-300 hover:-translate-y-0.5 hover:bg-chalk hover:shadow-sm focus:outline-none focus:ring-4 focus:ring-charcoal/10;
+  }
+
+  .space-node span {
+    @apply block text-base font-semibold text-charcoal;
+  }
+
+  .space-node small {
+    @apply mt-2 block text-xs leading-5 text-graphite;
+  }
+
+  .space-node-active {
+    @apply border-charcoal bg-charcoal shadow-soft;
+  }
+
+  .space-node-active span,
+  .space-node-active small {
+    @apply text-chalk;
+  }
+
+  .space-reveal {
+    @apply grid overflow-hidden rounded-[2rem] border border-charcoal/10 bg-chalk shadow-soft md:grid-cols-[0.92fr_1.08fr];
+  }
+
+  .space-image {
+    @apply relative min-h-[420px] overflow-hidden bg-charcoal;
+    perspective: 1100px;
+  }
+
+  .space-image img {
+    @apply h-full w-full object-cover transition duration-700;
+  }
+
+  .space-reveal:hover .space-image img {
+    @apply scale-105;
+  }
+
+  .space-image-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-charcoal/45 via-transparent to-transparent;
+  }
+
+  .space-content {
+    @apply p-6 md:p-9;
+  }
+
+  .space-note {
+    @apply rounded-2xl bg-ivory p-5;
+  }
+
+  .space-note strong {
+    @apply block text-xs font-semibold uppercase tracking-[0.18em] text-wood;
+  }
+
+  .space-note span {
+    @apply mt-3 block text-sm leading-7 text-graphite;
+  }
+
+  .space-expand .space-reveal {
+    transform-origin: left center;
+  }
+
+  .space-lounge .space-image-overlay {
+    @apply from-clay/45;
+  }
+
+  .space-soft .space-reveal {
+    box-shadow: 0 28px 90px rgba(182, 143, 113, 0.18);
+  }
+
+  .space-precision .space-note {
+    @apply border border-charcoal/10;
+  }
+
+  .space-spa .space-image-overlay {
+    background: linear-gradient(to top, rgba(167, 170, 165, 0.48), transparent);
+  }
+
+  .space-focus .space-node-active {
+    @apply bg-[#202938];
+  }
+
+  .space-warm .space-image-overlay {
+    background: linear-gradient(to top, rgba(196, 127, 90, 0.42), transparent);
+  }
+
+  .space-overview .space-reveal {
+    @apply md:grid-cols-1;
+  }
+
   .studio-image-wrap {
     @apply relative min-h-[420px] overflow-hidden bg-charcoal md:min-h-[560px];
   }
@@ -377,6 +556,14 @@ canvas {
     @apply relative h-44 overflow-hidden bg-gradient-to-br from-ivory to-stone/55;
   }
 
+  .product-visual img {
+    @apply h-full w-full object-cover opacity-80 transition duration-500;
+  }
+
+  .product-card:hover .product-visual img {
+    @apply scale-105 opacity-95;
+  }
+
   .product-shape {
     @apply absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 shadow-lg;
   }
@@ -396,6 +583,30 @@ canvas {
   .product-shape-4 {
     @apply h-24 w-32 rounded-3xl bg-wood/75;
   }
+
+  .product-gallery:hover {
+    transform: translateY(-4px) rotate(-0.35deg);
+  }
+
+  .product-soft:hover {
+    box-shadow: 0 26px 90px rgba(233, 223, 210, 0.9);
+  }
+
+  .product-precision:hover {
+    @apply border-charcoal/25;
+  }
+
+  .product-glow:hover {
+    box-shadow: 0 28px 90px rgba(246, 217, 172, 0.55);
+  }
+
+  .product-moodboard:hover .product-shape {
+    transform: translate(-50%, -50%) rotate(7deg) scale(1.04);
+  }
+
+  .product-spatial:hover {
+    transform: translateY(-5px) perspective(900px) rotateX(2deg);
+  }
 }
 
 @media (max-width: 720px) {
@@ -408,5 +619,15 @@ canvas {
     bottom: 0.75rem;
     left: 0.75rem;
     right: 0.75rem;
+  }
+}
+
+@keyframes cta-sheen {
+  0%,
+  60% {
+    transform: translateX(0) rotate(12deg);
+  }
+  100% {
+    transform: translateX(460px) rotate(12deg);
   }
 }
